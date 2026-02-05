@@ -1,0 +1,1 @@
+Grundlagen der Digitalisierung WS 2025/26

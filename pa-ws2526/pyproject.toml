@@ -1,0 +1,28 @@
+[project]
+name = "pa-ws2526"
+version = "0.0.1"
+description = "Grundlagen der Digitalisierung Projektarbeit WS 2025/26"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "black>=25.9.0",
+    "flake8>=7.3.0",
+    "h5py>=3.14.0",
+    "jupyterlab>=4.4.9",
+    "jupyterlab-h5web>=12.5.0",
+    "jupyterlab-rise>=0.43.1",
+    "matplotlib>=3.10.6",
+    "numpy>=2.3.3",
+    "pandas>=2.3.3",
+    "plotid>=0.3.2",
+    "pycodestyle-magic>=0.5",
+    "ruff>=0.13.2",
+    "tables>=3.10.2",
+]
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.140.2",
+    "pytest>=8.4.2",
+    "pytest-timeout>=2.4.0",
+]
