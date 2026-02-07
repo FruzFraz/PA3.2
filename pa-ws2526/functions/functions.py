@@ -100,7 +100,7 @@ def convert_Ws_to_Wh(energy_in_Ws: float) -> float:
 def calculate_mean_and_std(data: List[float]) -> Tuple[float, float]:
     arr = np.array(data)
     return float(np.mean(arr)), float(np.std(arr))
- pass
+pass
 
 
 def save_dataframe_in_hdf5_with_metadata(

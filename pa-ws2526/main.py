@@ -48,11 +48,11 @@ def main():
         time = fn.read_data(file_path, f"{base}/time")
 
     pass
-pass
 
-service_fill = fn.cap_service_data(tank_pressure, setpoint)
+
+    service_fill = fn.cap_service_data(tank_pressure, setpoint)
     if not fn.check_negative_values(power_1) or not fn.check_negative_values(power_2):
         print(f"Warning: Negative power values in {group} {run_id}")
-
+pass
 if __name__ == "__main__":
     main()
