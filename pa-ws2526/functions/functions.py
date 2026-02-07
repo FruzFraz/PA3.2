@@ -77,11 +77,19 @@ def check_negative_values(array: NDArray) -> bool:
 
 
 def integral_with_time_step(data: NDArray, time_steps: NDArray) -> float:
+    if len(data) != len(time_steps):
+        print("Warning: Length mismatch.")
+        return None
+    integral = 0.0
+    for i in range(len(data) - 1):
+        integral += (data[i] + data[i + 1]) / 2 * (time_steps[i + 1] - time_steps[i])
+    return float(integral)
     pass
 
 
 def calculate_service_loss(service_fill: float, service_target: float) -> float:
-    pass
+    return 100.0 * (1.0 - service_fill / service_target)
+pass
 
 
 def convert_Ws_to_Wh(energy_in_Ws: float) -> float:
@@ -89,7 +97,9 @@ def convert_Ws_to_Wh(energy_in_Ws: float) -> float:
 
 
 def calculate_mean_and_std(data: List[float]) -> Tuple[float, float]:
-    pass
+    return energy_in_Ws / 3600.0
+
+ pass
 
 
 def save_dataframe_in_hdf5_with_metadata(
