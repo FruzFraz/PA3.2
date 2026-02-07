@@ -42,8 +42,26 @@ def read_metadata(file: str, path: str, attr_key: str) -> Any:
 
 
 def read_data(file: str, path: str) -> Optional[NDArray]:
-    
-    pass
+    """Read data from HDF5 dataset and return as 1D numpy array."""
+    try:
+        with h5.File(file, 'r') as f:
+            if path not in f:
+                print(f"Warning: Path '{path}' does not exist in HDF5 file.")
+                return None
+            
+            dataset = f[path]
+            
+            if isinstance(dataset, h5.Group):
+                print(f"Warning: Path '{path}' points to a HDF5 group, not a dataset.")
+                return None
+            
+            
+            data = dataset[:]
+            return np.atleast_1d(data)
+    except Exception as e:
+        print(f"Warning: Error reading data from '{path}': {str(e)}")
+        return None
+
 
 
 def cap_service_data(service_data: NDArray, setpoint: float) -> NDArray:

@@ -24,7 +24,29 @@ def main():
         )
     
     pass
-    
+    for group in grupe_names:    
+        if group not in considerd_groups:
+            continue
+    pass
+
+    setpoint = fn.read_metadata(file_path, group, "setpoint")
+
+    group_service_loss = []
+    group_power = []
+
+    for run in range(1, 11):
+        run_id = f"run_{run:02d}"
+        base = f"{group}/{run_id}"
+
+        start_time_index = fn.read_metadata(
+            file_path, base, "analysis_start_time_index"
+        )
+
+        tank_pressure = fn.read_data(file_path, f"{base}/tank_1_pressure")
+        power_1 = fn.read_data(file_path, f"{base}/pump_1_power")
+        power_2 = fn.read_data(file_path, f"{base}/pump_2_power")
+        time = fn.read_data(file_path, f"{base}/time")
+    pass
 pass
 
 
