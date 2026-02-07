@@ -65,11 +65,15 @@ def read_data(file: str, path: str) -> Optional[NDArray]:
 
 
 def cap_service_data(service_data: NDArray, setpoint: float) -> NDArray:
-    pass
+    return np.array([
+        min(max(value, 0.0), setpoint) for value in service_data
+    ])
 
 
 def check_negative_values(array: NDArray) -> bool:
+    return np.all(array >= 0)
     pass
+
 
 
 def integral_with_time_step(data: NDArray, time_steps: NDArray) -> float:

@@ -13,7 +13,7 @@ topologies = ("Coupled", "Decentral", "Central")
 disruptions = ("BlockageConstant", "BlochageCosine", "PumpOutage","NoDisruption")
 
 
-def main():
+def main(): 
     grupe_names = fn.generate_group_name(controler, topologies, disruptions)
     considerd_groups = fn.get_considered_groups('ARIMA_Coupled_BlockageConstant', 'ARIMA_Coupled_BlockageCosine', 'ARIMA_Decentral_BlockageCosine', 'ARIMA_Decentral_NoDisruption')
     processed_data = fn.dataframe(
@@ -46,9 +46,13 @@ def main():
         power_1 = fn.read_data(file_path, f"{base}/pump_1_power")
         power_2 = fn.read_data(file_path, f"{base}/pump_2_power")
         time = fn.read_data(file_path, f"{base}/time")
+
     pass
 pass
 
+service_fill = fn.cap_service_data(tank_pressure, setpoint)
+    if not fn.check_negative_values(power_1) or not fn.check_negative_values(power_2):
+        print(f"Warning: Negative power values in {group} {run_id}")
 
 if __name__ == "__main__":
     main()
