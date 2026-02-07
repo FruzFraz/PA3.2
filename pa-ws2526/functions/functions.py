@@ -16,13 +16,33 @@ def generate_group_name(
     disruption: Union[str, List[str]],
 ) -> List[str]:
     pass
+    if isinstance(controller, str):
+        controller = [controller]
+    if isinstance(topology, str):
+        topology = [topology]
+    if isinstance(disruption, str):
+        disruption = [disruption]
+
+    return[f"{c}_{t}_{d}" for c in controller for t in topology for d in disruption]     
 
 
 def read_metadata(file: str, path: str, attr_key: str) -> Any:
-    pass
+    try:
+        with h5.File(file, "r") as hdf:
+            if path not in hdf:
+                print(f"Warning: Path '{path}' not found.")
+                return None
+            if attr_key not in hdf[path].attrs:
+                print(f"Warning: Attribute '{attr_key}' not found at '{path}'.")
+                return None
+            return hdf[path].attrs[attr_key]
+    except OSError as e:
+        print(f"Warning: {e}")
+        return None
 
 
 def read_data(file: str, path: str) -> Optional[NDArray]:
+    
     pass
 
 
