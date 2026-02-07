@@ -93,12 +93,13 @@ pass
 
 
 def convert_Ws_to_Wh(energy_in_Ws: float) -> float:
+    return energy_in_Ws / 3600.0
     pass
 
 
 def calculate_mean_and_std(data: List[float]) -> Tuple[float, float]:
-    return energy_in_Ws / 3600.0
-
+    arr = np.array(data)
+    return float(np.mean(arr)), float(np.std(arr))
  pass
 
 
