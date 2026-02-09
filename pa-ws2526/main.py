@@ -72,6 +72,10 @@ def main():
 
     group_service_loss.append(service_loss)
     group_power.append(power_Wh)
+    sl_mean, sl_std = fn.calculate_mean_and_std(group_service_loss)
+    p_mean, p_std = fn.calculate_mean_and_std(group_power)
+
+    processed_data.loc[group] = [p_mean, p_std, sl_mean, sl_std]
 pass
     
 if __name__ == "__main__":
