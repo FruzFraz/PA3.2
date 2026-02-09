@@ -1,4 +1,5 @@
 from email.mime import base
+from time import time
 from tokenize import group
 from typing import Union
 import numpy as np
@@ -53,6 +54,25 @@ def main():
     service_fill = fn.cap_service_data(tank_pressure, setpoint)
     if not fn.check_negative_values(power_1) or not fn.check_negative_values(power_2):
         print(f"Warning: Negative power values in {group} {run_id}")
+    sf_int = fn.integral_with_time_step(
+        service_fill[start_time_index:], time[start_time_index:]
+    )
+
+    target = np.full_like(service_fill[start_time_index:], setpoint)
+    st_int = fn.integral_with_time_step(target, time[start_time_index:])
+
+    service_loss = fn.calculate_service_loss(sf_int, st_int)
+
+    power_int = (
+    fn.integral_with_time_step(power_1, time)
+    + fn.integral_with_time_step(power_2, time)
+    )
+
+    power_Wh = fn.convert_Ws_to_Wh(power_int)
+
+    group_service_loss.append(service_loss)
+    group_power.append(power_Wh)
 pass
+    
 if __name__ == "__main__":
     main()
