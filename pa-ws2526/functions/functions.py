@@ -23,7 +23,8 @@ def generate_group_name(
     if isinstance(disruption, str):
         disruption = [disruption]
 
-    return[f"{c}_{t}_{d}" for c in controller for t in topology for d in disruption]     
+    return[f"{c}_{t}_{d}" for c in controller for t in topology for d in disruption]    
+pass 
 
 
 def read_metadata(file: str, path: str, attr_key: str) -> Any:
@@ -39,6 +40,7 @@ def read_metadata(file: str, path: str, attr_key: str) -> Any:
     except OSError as e:
         print(f"Warning: {e}")
         return None
+pass    
 
 
 def read_data(file: str, path: str) -> Optional[NDArray]:
@@ -61,6 +63,7 @@ def read_data(file: str, path: str) -> Optional[NDArray]:
     except Exception as e:
         print(f"Warning: Error reading data from '{path}': {str(e)}")
         return None
+pass
 
 
 
@@ -68,11 +71,11 @@ def cap_service_data(service_data: NDArray, setpoint: float) -> NDArray:
     return np.array([
         min(max(value, 0.0), setpoint) for value in service_data
     ])
-
+pass
 
 def check_negative_values(array: NDArray) -> bool:
     return np.all(array >= 0)
-    pass
+pass
 
 
 
@@ -84,7 +87,7 @@ def integral_with_time_step(data: NDArray, time_steps: NDArray) -> float:
     for i in range(len(data) - 1):
         integral += (data[i] + data[i + 1]) / 2 * (time_steps[i + 1] - time_steps[i])
     return float(integral)
-    pass
+pass
 
 
 def calculate_service_loss(service_fill: float, service_target: float) -> float:
@@ -94,7 +97,7 @@ pass
 
 def convert_Ws_to_Wh(energy_in_Ws: float) -> float:
     return energy_in_Ws / 3600.0
-    pass
+pass    
 
 
 def calculate_mean_and_std(data: List[float]) -> Tuple[float, float]:
@@ -109,13 +112,30 @@ def save_dataframe_in_hdf5_with_metadata(
     group_name: str,
     metadata: Dict[str, Any],
 ) -> None:
+    with pd.HDFStore(hdf5_path, "a") as store:
+        store.put(group_name, df)
+        group = store.get_storer(group_name).group
+        for k, v in metadata.items():
+            group._v_attrs[k] = v
+
     pass
 
 
 def read_plot_data(
     file_path: str, group_path: str
 ) -> Tuple[pd.DataFrame, Dict[str, Any]]:
-    pass
+    with pd.HDFStore(file_path, "r") as store:
+             df = store[group_path]
+             attrs = store.get_storer(group_path).group._v_attrs
+             meta = {
+             "legend_title": attrs.legend_title,
+             "x_label": attrs.x_label,
+             "x_unit": attrs.x_unit,
+             "y_label": attrs.y_label,
+             "y_unit": attrs.y_unit,
+        }
+    return df, meta
+pass
 
 
 def plot_service_loss_vs_power(
