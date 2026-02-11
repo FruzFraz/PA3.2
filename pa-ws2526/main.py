@@ -1,22 +1,25 @@
-from email.mime import base
-from time import time
-from tokenize import group
-from typing import Union
+
 import numpy as np
 import pandas as pd
-import os
+#import os
 from functions import functions as fn
 
-from functions import functions as fn
-file_path =os.path.join("data_GdD_WiSe2526", "PA_WS2526_data.csv")
-controler = ("ARIMA", "DTWk", "PID")
+
+file_path = "./data/data_GdD_WiSe2526 (1).h5"
+controler = ("ARIMA", "DTW", "PID")
 topologies = ("Coupled", "Decentral", "Central")
-disruptions = ("BlockageConstant", "BlochageCosine", "PumpOutage","NoDisruption")
+disruptions = ("BlockageConstant",
+                "BlochageCosine",
+                "PumpOutage","NoDisruption")
 
 
 def main(): 
     grupe_names = fn.generate_group_name(controler, topologies, disruptions)
-    considerd_groups = fn.get_considered_groups('ARIMA_Coupled_BlockageConstant', 'ARIMA_Coupled_BlockageCosine', 'ARIMA_Decentral_BlockageCosine', 'ARIMA_Decentral_NoDisruption')
+    considerd_groups = fn.get_considered_groups(
+        'ARIMA_Coupled_BlockageConstant',
+        'ARIMA_Coupled_BlockageCosine', 
+        'ARIMA_Decentral_BlockageCosine', 
+        'ARIMA_Decentral_NoDisruption')
     processed_data = fn.dataframe(
         power_mean = [],
         power_std =[],
@@ -25,6 +28,7 @@ def main():
         )
     
     pass
+    
     group: str
     for group in grupe_names:    
         if group not in considerd_groups:
@@ -35,6 +39,8 @@ def main():
 
     group_service_loss = []
     group_power = []
+    base: str
+    time: np.ndarray
 
     for run in range(1, 11):
         run_id = f"run_{run:02d}"
