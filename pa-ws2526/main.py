@@ -8,9 +8,9 @@ from functions import functions as fn
 file_path = "./data/data_GdD_WiSe2526 (1).h5"
 controler = ("ARIMA", "DTW", "PID")
 topologies = ("Coupled", "Decentral", "Central")
-disruptions = ("BlockageConstant",
+disruptions = ["BlockageConstant",
                 "BlochageCosine",
-                "PumpOutage","NoDisruption")
+                "PumpOutage","NoDisruption"]
 
 
 def main(): 
