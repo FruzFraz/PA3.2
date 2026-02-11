@@ -15,11 +15,11 @@ disruptions = ["BlockageConstant",
 
 def main(): 
     grupe_names = fn.generate_group_name(controler, topologies, disruptions)
-    considerd_groups = fn.get_considered_groups(
+    considerd_groups = [
         'ARIMA_Coupled_BlockageConstant',
         'ARIMA_Coupled_BlockageCosine', 
         'ARIMA_Decentral_BlockageCosine', 
-        'ARIMA_Decentral_NoDisruption')
+        'ARIMA_Decentral_NoDisruption']
     processed_data = fn.dataframe(
         power_mean = [],
         power_std =[],
