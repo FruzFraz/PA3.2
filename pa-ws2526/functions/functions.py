@@ -141,10 +141,35 @@ pass
 def plot_service_loss_vs_power(
     processed_data: pd.DataFrame, plot_format_data: Dict[str, str]
 ) -> Figure:
+    fig, ax = plt.subplots()
+
+    for label in processed_data.index:
+        row = processed_data.loc[label]
+        ax.errorbar(
+            row["service_loss_mean"],
+            row["power_mean"],
+            xerr=row["service_loss_std"],
+            yerr=row["power_std"],
+            fmt="o",
+            label=label,
+        )
+
+    ax.set_xlabel(f'{plot_format_data["x_label"]} [{plot_format_data["x_unit"]}]')
+    ax.set_ylabel(f'{plot_format_data["y_label"]} [{plot_format_data["y_unit"]}]')
+    ax.legend(title=plot_format_data["legend_title"])
+    ax.grid(True)
+
+    return fig
     pass
 
 
 def publish_plot(
     fig: Figure, source_paths: Union[str, List[str]], destination_path: str
 ) -> None:
+    fig = tagplot(
+        fig,
+        id_method="time",
+        prefix="GdD_WS_2526_<MATRICULATIONNUMBER>_",
+    )
+    publish(fig, source_paths, destination_path)
     pass

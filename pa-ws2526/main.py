@@ -25,6 +25,7 @@ def main():
         )
     
     pass
+    group: str
     for group in grupe_names:    
         if group not in considerd_groups:
             continue
