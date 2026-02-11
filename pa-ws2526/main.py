@@ -20,12 +20,14 @@ def main():
         'ARIMA_Coupled_BlockageCosine', 
         'ARIMA_Decentral_BlockageCosine', 
         'ARIMA_Decentral_NoDisruption']
-    processed_data = fn.dataframe(
-        power_mean = [],
-        power_std =[],
-        servise_loss_mean = [],
-        servise_loss_std = [],
-        )
+    processed_data = pd.DataFrame(
+    columns=[
+        "power_mean",
+        "power_std",
+        "service_loss_mean",
+        "service_loss_std",
+    ]
+)
     
     pass
     
