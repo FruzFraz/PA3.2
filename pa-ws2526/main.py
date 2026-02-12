@@ -16,10 +16,10 @@ def main():
 
     grupe_names = fn.generate_group_name(controler, topologies, disruptions)
     considerd_groups = [
-        'ARIMA_Coupled_BlockageConstant',
-        'ARIMA_Coupled_BlockageCosine', 
-        'ARIMA_Decentral_BlockageCosine', 
-        'ARIMA_Decentral_NoDisruption']
+        "ARIMA_Coupled_BlockageConstant",
+        "ARIMA_Coupled_BlockageCosine", 
+        "ARIMA_Decentral_BlockageCosine", 
+        "ARIMA_Decentral_NoDisruption"]
     processed_data = pd.DataFrame(
     columns=[
         "power_mean",
@@ -27,27 +27,26 @@ def main():
         "service_loss_mean",
         "service_loss_std",
     ]
-)
-    
-    
+    )
+
+
+    data_archive_path = "./data_GdD_plot_data_WiSe2526.h5"
     metadata_dict = {
-            "legend_title": "",
-            "x_label": "Power (Wh)",
-            "x_unit": "Wh",
-            "y_label": "Service Loss (m³)",
-            "y_unit": "m³",
-    }
+            "legend_title": "Controller_Topology_Disruption",
+            "x_label": "Service Loss",
+            "x_unit": "%",
+            "y_label": "Power",
+            "y_unit": "Wh",
+            }
     
     for group in grupe_names:    
         if group not in considerd_groups:
                     continue
-    pass
-    
+       
+        setpoint = fn.read_metadata(file_path, group, "setpoint")
 
-    setpoint = fn.read_metadata(file_path, group, "setpoint")
-
-    group_service_loss = []
-    group_power = []
+        group_service_loss = []
+        group_power = []
 
     for run in range(1, 11):
         run_id = f"run_{run:02d}"
