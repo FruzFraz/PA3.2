@@ -68,9 +68,7 @@ def read_data(file: str, path: str) -> Optional[NDArray]:
 
 
 def cap_service_data(service_data: NDArray, setpoint: float) -> NDArray:
-    return np.array([
-        min(max(value, 0.0), setpoint) for value in service_data
-    ])
+    return np.clip(service_data, 0.0, setpoint)
 
 
 def check_negative_values(array: NDArray) -> bool:

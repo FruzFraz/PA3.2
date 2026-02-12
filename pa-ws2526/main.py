@@ -42,8 +42,6 @@ def main():
 
     group_service_loss = []
     group_power = []
-    base: str
-    time: np.ndarray
 
     for run in range(1, 11):
         run_id = f"run_{run:02d}"
