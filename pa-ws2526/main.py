@@ -1,19 +1,19 @@
 
 import numpy as np
 import pandas as pd
-#import os
 from functions import functions as fn
 
 
-file_path = "C:\PA3.2\data_GdD_WiSe2526 (1).h5"
-controler = ("ARIMA", "DTW", "PID")
-topologies = ("Coupled", "Decentral", "Central")
-disruptions = ["BlockageConstant",
-                "BlochageCosine",
-                "PumpOutage","NoDisruption"]
 
 
 def main(): 
+    file_path = "C:\PA3.2\data_GdD_WiSe2526 (1).h5"
+    controler = ("ARIMA", "DTW", "PID")
+    topologies = ("Coupled", "Decentral", "Central")
+    disruptions = ["BlockageConstant",
+                    "BlochageCosine",
+                    "PumpOutage","NoDisruption"]
+
     grupe_names = fn.generate_group_name(controler, topologies, disruptions)
     considerd_groups = [
         'ARIMA_Coupled_BlockageConstant',
@@ -30,7 +30,13 @@ def main():
 )
     
     
-    
+    metadata_dict = {
+            "legend_title": "",
+            "x_label": "Power (Wh)",
+            "x_unit": "Wh",
+            "y_label": "Service Loss (m³)",
+            "y_unit": "m³",
+    }
     
     for group in grupe_names:    
         if group not in considerd_groups:
@@ -82,8 +88,17 @@ def main():
     group_power.append(power_Wh)
     sl_mean, sl_std = fn.calculate_mean_and_std(group_service_loss)
     p_mean, p_std = fn.calculate_mean_and_std(group_power)
-
+   
+   fn.save_dataframe_in_hdf5_with_metadata(
+        prcoessed_data,
+        data_archve_path,
+        Matadata_path,
+   )
     processed_data.loc[group] = [p_mean, p_std, sl_mean, sl_std]
+    fig = fn.plot_service_loss_vs_power(
+        plot_data,
+        plot_format_data,
+
 
     
 if __name__ == "__main__":
