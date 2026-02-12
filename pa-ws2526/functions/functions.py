@@ -112,11 +112,14 @@ def save_dataframe_in_hdf5_with_metadata(
     group_name: str,
     metadata: Dict[str, Any],
 ) -> None:
-    with pd.HDFStore(hdf5_path, "a") as store:
-        store.put(group_name, df)
-        group = store.get_storer(group_name).group
-        for k, v in metadata.items():
-            group._v_attrs[k] = v
+    try:
+        with pd.HDFStore(hdf5_path, "a") as store:
+            store.put(group_name, df)
+            group = store.get_storer(group_name).group
+            for k, v in metadata.items():
+                group._v_attrs[k] = v
+    except Exception as e:
+        print(f"Warning: Error saving DataFrame to HDF5: {str(e)}")
 
     
 
@@ -171,7 +174,7 @@ def publish_plot(
     fig = tagplot(
         fig,
         id_method="time",
-        prefix="GdD_WS_2526_<MATRICULATIONNUMBER>_",
+        prefix="GdD_WS_2526_<3695111>_",
     )
     publish(fig, source_paths, destination_path)
     
