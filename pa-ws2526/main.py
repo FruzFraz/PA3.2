@@ -5,7 +5,7 @@ import pandas as pd
 from functions import functions as fn
 
 
-file_path = "./data/data_GdD_WiSe2526 (1).h5"
+file_path = "C:\PA3.2\data_GdD_WiSe2526 (1).h5"
 controler = ("ARIMA", "DTW", "PID")
 topologies = ("Coupled", "Decentral", "Central")
 disruptions = ["BlockageConstant",
