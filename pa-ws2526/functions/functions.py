@@ -89,6 +89,8 @@ def integral_with_time_step(data: NDArray, time_steps: NDArray) -> float:
 
 
 def calculate_service_loss(service_fill: float, service_target: float) -> float:
+    if service_target == 0:
+        return 0.0
     return 100.0 * (1.0 - service_fill / service_target)
 
 
