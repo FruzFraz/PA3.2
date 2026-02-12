@@ -31,10 +31,11 @@ def main():
     
     
     
-    group: str
+    
     for group in grupe_names:    
         if group not in considerd_groups:
-            continue
+                    continue
+    pass
     
 
     setpoint = fn.read_metadata(file_path, group, "setpoint")
@@ -49,7 +50,7 @@ def main():
         base = f"{group}/{run_id}"
 
         start_time_index = fn.read_metadata(
-            file_path, base, "analysis_start_time_index"
+            file_path, base, "analyse_start_time_index"
         )
 
         tank_pressure = fn.read_data(file_path, f"{base}/tank_1_pressure")
