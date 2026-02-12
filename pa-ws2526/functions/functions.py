@@ -15,7 +15,7 @@ def generate_group_name(
     topology: Union[str, List[str]],
     disruption: Union[str, List[str]],
 ) -> List[str]:
-    pass
+    
     if isinstance(controller, str):
         controller = [controller]
     if isinstance(topology, str):
@@ -24,7 +24,7 @@ def generate_group_name(
         disruption = [disruption]
 
     return[f"{c}_{t}_{d}" for c in controller for t in topology for d in disruption]    
-pass 
+
 
 
 def read_metadata(file: str, path: str, attr_key: str) -> Any:
@@ -40,7 +40,7 @@ def read_metadata(file: str, path: str, attr_key: str) -> Any:
     except OSError as e:
         print(f"Warning: {e}")
         return None
-pass    
+    
 
 
 def read_data(file: str, path: str) -> Optional[NDArray]:
@@ -63,7 +63,7 @@ def read_data(file: str, path: str) -> Optional[NDArray]:
     except Exception as e:
         print(f"Warning: Error reading data from '{path}': {str(e)}")
         return None
-pass
+
 
 
 
@@ -71,11 +71,11 @@ def cap_service_data(service_data: NDArray, setpoint: float) -> NDArray:
     return np.array([
         min(max(value, 0.0), setpoint) for value in service_data
     ])
-pass
+
 
 def check_negative_values(array: NDArray) -> bool:
     return np.all(array >= 0)
-pass
+
 
 
 
@@ -87,23 +87,23 @@ def integral_with_time_step(data: NDArray, time_steps: NDArray) -> float:
     for i in range(len(data) - 1):
         integral += (data[i] + data[i + 1]) / 2 * (time_steps[i + 1] - time_steps[i])
     return float(integral)
-pass
+
 
 
 def calculate_service_loss(service_fill: float, service_target: float) -> float:
     return 100.0 * (1.0 - service_fill / service_target)
-pass
+
 
 
 def convert_Ws_to_Wh(energy_in_Ws: float) -> float:
     return energy_in_Ws / 3600.0
-pass    
+    
 
 
 def calculate_mean_and_std(data: List[float]) -> Tuple[float, float]:
     arr = np.array(data)
     return float(np.mean(arr)), float(np.std(arr))
-pass
+
 
 
 def save_dataframe_in_hdf5_with_metadata(
@@ -118,7 +118,7 @@ def save_dataframe_in_hdf5_with_metadata(
         for k, v in metadata.items():
             group._v_attrs[k] = v
 
-    pass
+    
 
 
 def read_plot_data(
@@ -135,7 +135,7 @@ def read_plot_data(
              "y_unit": attrs.y_unit,
         }
     return df, meta
-pass
+
 
 
 def plot_service_loss_vs_power(
@@ -160,7 +160,7 @@ def plot_service_loss_vs_power(
     ax.grid(True)
 
     return fig
-    pass
+    
 
 
 def publish_plot(
@@ -172,4 +172,4 @@ def publish_plot(
         prefix="GdD_WS_2526_<MATRICULATIONNUMBER>_",
     )
     publish(fig, source_paths, destination_path)
-    pass
+    

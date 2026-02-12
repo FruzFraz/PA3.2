@@ -29,13 +29,13 @@ def main():
     ]
 )
     
-    pass
+    
     
     group: str
     for group in grupe_names:    
         if group not in considerd_groups:
             continue
-    pass
+    
 
     setpoint = fn.read_metadata(file_path, group, "setpoint")
 
@@ -57,7 +57,7 @@ def main():
         power_2 = fn.read_data(file_path, f"{base}/pump_2_power")
         time = fn.read_data(file_path, f"{base}/time")
 
-    pass
+    
 
 
     service_fill = fn.cap_service_data(tank_pressure, setpoint)
@@ -85,7 +85,7 @@ def main():
     p_mean, p_std = fn.calculate_mean_and_std(group_power)
 
     processed_data.loc[group] = [p_mean, p_std, sl_mean, sl_std]
-pass
+
     
 if __name__ == "__main__":
     main()
