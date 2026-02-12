@@ -156,6 +156,8 @@ def plot_service_loss_vs_power(
 
     ax.set_xlabel(f'{plot_format_data["x_label"]} [{plot_format_data["x_unit"]}]')
     ax.set_ylabel(f'{plot_format_data["y_label"]} [{plot_format_data["y_unit"]}]')
+    ax.set_xlim(left=0)
+    ax.set_ylim(bottom=0)
     ax.legend(title=plot_format_data["legend_title"])
     ax.grid(True)
 
