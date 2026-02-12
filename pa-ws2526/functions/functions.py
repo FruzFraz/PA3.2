@@ -100,7 +100,13 @@ def convert_Ws_to_Wh(energy_in_Ws: float) -> float:
     
 
 
-def calculate_mean_and_std(data: List[float]) -> Tuple[float, float]:
+def calculate_mean_and_std(
+    data: List[float]
+) -> Tuple[float, float]:
+    if len(data) == 0:  # >>> ADDED
+        print("Warning: Empty data list.")
+        return 0.0, 0.0
+    
     arr = np.array(data)
     return float(np.mean(arr)), float(np.std(arr))
 
