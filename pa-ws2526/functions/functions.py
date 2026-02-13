@@ -193,11 +193,10 @@ def publish_plot(
     fig = tagplot(
         fig,
         id_method="time",
-        prefix="GdD_WS_2526_<3695111>_",
+        prefix="GdD_WS_2526_3695111_",
         engine= "matplotlib"
     )
-    if isinstance(source_paths, list):
-        publish(fig, *source_paths, destination_path)
-    else:
-        publish(fig, source_paths, destination_path)
+    if isinstance(source_paths, str):
+       source_paths = [source_paths]
+    publish(fig, source_paths, destination_path)
     
