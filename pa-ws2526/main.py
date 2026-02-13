@@ -2,12 +2,12 @@
 import numpy as np
 import pandas as pd
 from functions import functions as fn
-
+import os
 
 
 
 def main(): 
-    file_path = "C:\PA3.2\data_GdD_WiSe2526 (1).h5"
+    file_path = r"C:\PA3.2\data_GdD_WiSe2526 (1).h5"
     controler = ("ARIMA", "DTW", "PID")
     topologies = ("Coupled", "Decentral", "Central")
     disruptions = ["BlockageConstant",
@@ -41,7 +41,7 @@ def main():
     
     for group in grupe_names:    
         if group not in considerd_groups:
-                    continue
+            continue
        
         setpoint = fn.read_metadata(file_path, group, "setpoint")
 
@@ -85,8 +85,8 @@ def main():
 
             group_service_loss.append(service_loss)
             group_power.append(power_Wh)
-    sl_mean, sl_std = fn.calculate_mean_and_std(group_service_loss)
-    p_mean, p_std = fn.calculate_mean_and_std(group_power)
+        sl_mean, sl_std = fn.calculate_mean_and_std(group_service_loss)
+        p_mean, p_std = fn.calculate_mean_and_std(group_power)
 
     processed_data.loc[group] = [p_mean, p_std, sl_mean, sl_std]   
     print(processed_data)
@@ -98,21 +98,23 @@ def main():
             metadata_dict,
     )
     plot_data, plot_format_data = fn.read_plot_data(
-        data_archive_path, "plotdata"
+    data_archive_path, 
+    "plot_data"
     )
 
      
     fig = fn.plot_service_loss_vs_power(plot_data, plot_format_data)
 
-    
+    base_dir = os.path.dirname(os.path.abspath(__file__))
     fn.publish_plot(
         fig,
         source_paths=[
             data_archive_path,
             "./functions/functions.py",
             "./main.py",
+            
         ],
-        destination_path="./plotid",
+        destination_path = r"./plotid",
     )
     
 if __name__ == "__main__":

@@ -77,7 +77,12 @@ def check_negative_values(array: NDArray) -> bool:
 
 
 
-def integral_with_time_step(data: NDArray, time_steps: NDArray) -> float:
+def integral_with_time_step(data: NDArray, time_steps: NDArray) -> Optional[float]:
+    
+    if data is None or time_steps is None:
+        print("Warning: Data or time_steps is None.")
+        return None
+
     if len(data) != len(time_steps):
         print("Warning: Length mismatch.")
         return None
@@ -89,6 +94,10 @@ def integral_with_time_step(data: NDArray, time_steps: NDArray) -> float:
 
 
 def calculate_service_loss(service_fill: float, service_target: float) -> float:
+    if service_fill is None or service_target is None:
+        print("Warning: Service values are None.")
+        return 0.0
+
     if service_target == 0:
         return 0.0
     return 100.0 * (1.0 - service_fill / service_target)
@@ -96,6 +105,9 @@ def calculate_service_loss(service_fill: float, service_target: float) -> float:
 
 
 def convert_Ws_to_Wh(energy_in_Ws: float) -> float:
+    if energy_in_Ws is None:  # >>> ADDED
+        print("Warning: Energy value is None.")
+        return 0.0
     return energy_in_Ws / 3600.0
     
 
@@ -134,14 +146,14 @@ def read_plot_data(
     file_path: str, group_path: str
 ) -> Tuple[pd.DataFrame, Dict[str, Any]]:
     with pd.HDFStore(file_path, "r") as store:
-             df = store[group_path]
-             attrs = store.get_storer(group_path).group._v_attrs
-             meta = {
-             "legend_title": attrs.legend_title,
-             "x_label": attrs.x_label,
-             "x_unit": attrs.x_unit,
-             "y_label": attrs.y_label,
-             "y_unit": attrs.y_unit,
+        df = store[group_path]
+        attrs = store.get_storer(group_path).group._v_attrs
+        meta = {
+        "legend_title": attrs.legend_title,
+        "x_label": attrs.x_label,
+        "x_unit": attrs.x_unit,
+        "y_label": attrs.y_label,
+        "y_unit": attrs.y_unit,
         }
     return df, meta
 
@@ -177,10 +189,15 @@ def plot_service_loss_vs_power(
 def publish_plot(
     fig: Figure, source_paths: Union[str, List[str]], destination_path: str
 ) -> None:
+    #source_paths = [source_paths]
     fig = tagplot(
         fig,
         id_method="time",
         prefix="GdD_WS_2526_<3695111>_",
+        engine= "matplotlib"
     )
-    publish(fig, source_paths, destination_path)
+    if isinstance(source_paths, list):
+        publish(fig, *source_paths, destination_path)
+    else:
+        publish(fig, source_paths, destination_path)
     
