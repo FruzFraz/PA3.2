@@ -13,7 +13,7 @@ def main():
     controler = ("ARIMA", "DTW", "PID")
     topologies = ("Coupled", "Decentral", "Central")
     disruptions = ["BlockageConstant",
-                    "BlochageCosine",
+                    "BlockageCosine",
                     "PumpOutage","NoDisruption"]
 
     grupe_names = fn.generate_group_name(controler, topologies, disruptions)
@@ -53,6 +53,7 @@ def main():
         for run in range(1, 11):
             run_id = f"run_{run:02d}"
             base = f"{group}/{run_id}"
+            
 
             start_time_index = fn.read_metadata(
                 file_path, base, "analyse_start_time_index"
@@ -87,11 +88,10 @@ def main():
 
             group_service_loss.append(service_loss)
             group_power.append(power_Wh)
-    sl_mean, sl_std = fn.calculate_mean_and_std(group_service_loss)
-    p_mean, p_std = fn.calculate_mean_and_std(group_power)
-
-    processed_data.loc[group] = [p_mean, p_std, sl_mean, sl_std]   
-    print(processed_data)
+        sl_mean, sl_std = fn.calculate_mean_and_std(group_service_loss)
+        p_mean, p_std = fn.calculate_mean_and_std(group_power)
+        processed_data.loc[group] = [p_mean, p_std, sl_mean, sl_std]   
+        print(processed_data)
    
     fn.save_dataframe_in_hdf5_with_metadata(
             processed_data,
@@ -107,14 +107,12 @@ def main():
      
     fig = fn.plot_service_loss_vs_power(plot_data, plot_format_data)
 
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-
     fn.publish_plot(
         fig,
         source_paths=[
-            os.path.join(base_dir, data_archive_path),
+            data_archive_path,  
             os.path.join(base_dir, "functions", "functions.py"),
-            os.path.join(base_dir, "main.py"),
+            os.path.join(base_dir, "main.py")
         ],
         destination_path=os.path.join(base_dir, "plotid"),
     )    
