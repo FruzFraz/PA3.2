@@ -244,7 +244,7 @@ def convert_Ws_to_Wh(energy_in_Ws: float) -> float:
         >>> convert_Ws_to_Wh(7200.0)
         2.0  # 7200 Ws = 2 Wh
     """
-    if energy_in_Ws is None:  # >>> ADDED
+    if energy_in_Ws is None:  # >>> ADDED ChatGPT
         print("Warning: Energy value is None.")
         return 0.0
     return energy_in_Ws / 3600.0
@@ -255,7 +255,7 @@ def calculate_mean_and_std(
     data: List[float]
 ) -> Tuple[float, float]:
     
-    if len(data) == 0:  # >>> ADDED
+    if len(data) == 0:  # >>> ADDED CahtGPT
         print("Warning: Empty data list.")
         return 0.0, 0.0
     
